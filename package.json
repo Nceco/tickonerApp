@@ -21,7 +21,6 @@
     "start": "cross-env NODE_ENV=development react-app-rewired start",
     "build": "cross-env NODE_ENV=production react-app-rewired build",
     "test": "cross-env NODE_ENV=test react-app-rewired test",
-    "eject": "react-scripts eject",
     "prepare": "husky install",
     "release": "standard-version"
   },
@@ -50,5 +49,6 @@
     "husky": "^8.0.3",
     "react-app-rewired": "^2.2.1",
     "standard-version": "^9.5.0"
-  }
+  },
+  "proxy": "http://101.132.46.74"
 }
