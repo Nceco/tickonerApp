@@ -2,4 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 #规范代码commit规范
-npx commitlint -E $HUSKY_GIT_PARAMS
+npx commitlint -e $HUSKY_GIT_PARAMS
