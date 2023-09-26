@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { loadData } from './api/App/index'
-import moment from "moment";
 import { getNaturalQuarter, getNaturalMonth, getNaturalHalfYear,getNaturalYear } from "./utils/CommonUtil";
 
 function App (){
@@ -11,7 +10,7 @@ function App (){
     // console.log(getNaturalMonth('2022-01-26','2024-01-26','YYYY-MM-DD HH:mm:ss'))
     // console.log(getNaturalHalfYear(1645372799000, 1688140798000, 'YYYY-MM-DD'))
     // console.log()
-    console.log(getNaturalYear(1645372799000, 1704038399000, 'YYYY-MM-DD HH:mm:ss'))
+    console.log(getNaturalQuarter(1672492986000, 1696089598000, 'YYYY-MM-DD'))
   })
 
   const init = async () => {
