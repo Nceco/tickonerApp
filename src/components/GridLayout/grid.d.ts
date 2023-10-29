@@ -6,6 +6,10 @@ declare namespace Grid {
 
   interface PanelProps {
     layouts: ReactGridLayout.Layout,
+    cardProps?: {
+      show: boolean,
+      title: string
+    }
 
     //todo
     [key: string]: any

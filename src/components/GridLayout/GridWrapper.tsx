@@ -7,14 +7,14 @@ import React, { PropsWithChildren, useRef } from "react";
 import GridLayout from 'react-grid-layout'
 import { useSize } from "ahooks";
 import GridItem from "./GridItem";
+import { PanelItem } from "../../App";
 
 // https://github.com/react-grid-layout/react-grid-layout
 
 const GridWrapper: React.FC<PropsWithChildren<Grid.GridWrapperProps>> = (props) => {
+  const { gridItems } = props
 
   const gridContainerRef = useRef<HTMLDivElement>(null)
-
-  console.log(props?.gridItems?.map((item: Grid.PanelProps) => item?.layouts))
 
   //调整试图大小grid的width也随着调整
   const size = useSize(gridContainerRef)
@@ -27,15 +27,15 @@ const GridWrapper: React.FC<PropsWithChildren<Grid.GridWrapperProps>> = (props) 
         rowHeight={30}
         width={size?.width || 1200}
         //cols代表整个Grid一行所能填充的几个layout中的w
-        cols={24}
-        layout={props?.gridItems?.map((item: Grid.PanelProps) => item?.layouts)}
+        cols={12}
+        layout={gridItems?.map((item: PanelItem) => item?.layouts)}
       >
         {
-          props?.gridItems?.length && props?.gridItems?.map((item: Grid.PanelProps) => {
+          gridItems?.length && gridItems?.map((item: PanelItem) => {
             return (
               //todo 封装一个自定义面板容器
               <div key={item?.layouts?.i}>
-                <GridItem/>
+                <GridItem item={item}/>
               </div>
             )
           })

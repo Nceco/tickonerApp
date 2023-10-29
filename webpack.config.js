@@ -49,10 +49,10 @@ module.exports = {
             new CssMinimizerPlugin()
         ]
     },
-    externals: {
+    externals: process.env.NODE_ENV === 'production' ? {
         'react': 'React',
         'react-dom': 'ReactDOM'
-    },
+    } : {},
     resolve: {
         extensions: ['.js', '.tsx', '.ts', '.jsx'],
         alias: {
@@ -65,14 +65,24 @@ module.exports = {
         }),
         //配合html-webpack-plugin将生成的html文件里的变量替换为浏览器认识的东西
         new InterpolateHtmlPlugin({
-            PUBLIC_URL: 'public'
+            PUBLIC_URL: process.env.NODE_ENV === 'production' ? 'public' : ''
         }),
         //复制文件夹的文件到指定文件夹下（有待考虑,影响打包速度、体积）
-        new CopyWebpackPlugin({patterns: copy_files()}),
+        // new CopyWebpackPlugin({patterns: copy_files()}),
         //单独打包css文件
         new MiniCssExtractPlugin()
     ],
-    // devServer: {
-    //
-    // }
+    //启的本地服务默认静态资源会去找项目下处于public文件下的内容
+    devServer: {
+        compress: true,
+        port: 2333,
+        open: true,
+        proxy: {
+            '/api': {
+                target: 'http://101.132.46.74',
+                changeOrigin: true,
+                pathRewrite: {'^/api': ''}
+            }
+        }
+    }
 }
