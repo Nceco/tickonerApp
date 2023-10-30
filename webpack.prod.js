@@ -18,19 +18,19 @@ const copy_files = () => {
 }
 
 module.exports = {
-    module:{
-        rules:[
+    module: {
+        rules: [
             {
                 test: /.css$/i,
                 use: [MiniCssExtractPlugin.loader, 'css-loader']
             },
             {
                 test: /.less$/i,
-                use: [MiniCssExtractPlugin.loader, 'css-loader','less-loader']
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
             },
             {
                 test: /.(scss|sass)$/i,
-                use: [MiniCssExtractPlugin.loader, 'css-loader','sass¬-loader']
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass¬-loader']
             }
         ]
     },
@@ -43,7 +43,8 @@ module.exports = {
     },
     externals: {
         'react': 'React',
-        'react-dom': 'ReactDOM'
+        'react-dom': 'ReactDOM',
+        'echarts': 'echarts'
     },
     plugins: [
         //配合html-webpack-plugin将生成的html文件里的变量替换为浏览器认识的东西
