@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './mock/mock'
-import './index.css';
+import './global.less';
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import App from './App';

@@ -9,7 +9,7 @@ import {CloseOutlined} from "@ant-design/icons";
 import {CommonButtonProps} from "@/components/common/Button/button";
 
 type CancelButtonProps = Omit<CommonButtonProps, 'text'> & {
-  text?: string | React.ReactNode
+  text?: string
 }
 const CancelButton: React.FC<PropsWithChildren<CancelButtonProps>> = (props) => {
   const {
