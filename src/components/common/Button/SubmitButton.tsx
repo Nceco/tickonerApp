@@ -9,7 +9,7 @@ import {CheckOutlined} from "@ant-design/icons";
 import {CommonButtonProps} from "@/components/common/Button/button";
 
 type SubmitButtonProps = Omit<CommonButtonProps, 'text'> & {
-  text?: string | React.ReactNode
+  text?: string
 }
 const SubmitButton: React.FC<PropsWithChildren<SubmitButtonProps>> = (props) => {
   const {

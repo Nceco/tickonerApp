@@ -6,20 +6,22 @@
 
 import {Button} from "antd";
 import React, {PropsWithChildren} from "react";
+import {isEmpty} from 'lodash'
 import {CommonButtonProps} from "@/components/common/Button/button";
 
 const DefaultButton: React.FC<PropsWithChildren<CommonButtonProps>> = (props) => {
   const {
     type = 'primary',
-    text,
+    text ,
     ...restProps
   } = props
+
   return (
     <Button
       {...restProps}
       type={type}
     >
-      {text ?? '默认按钮'}
+      {isEmpty(text.trim()) ? '默认按钮':text}
     </Button>
   )
 }
