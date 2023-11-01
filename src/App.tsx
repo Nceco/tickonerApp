@@ -1,18 +1,25 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {createContext, useEffect, useRef, useState} from 'react';
 import GridWrapper from '@/components/GridLayout/GridWrapper'
 import {EChartOption} from "echarts";
 import DefaultButton from "@/components/common/Button/DefaultButton";
-import CancelButton from "@/components/common/Button/CancelButton";
-import {Card, Col, Divider, Drawer, Row} from "antd";
+import {Col, Row} from "antd";
 import {PlusSquareOutlined} from "@ant-design/icons";
-import {useBoolean, useSize} from "ahooks";
+import {useSize} from "ahooks";
 
 export interface PanelItem extends Grid.PanelProps {
   echartOptions?: EChartOption
 }
 
+type GridContextType = {
+  screenSize?: {
+    width: number,
+    height: number
+  }
+}
+
+export const GridProviderContext = createContext<GridContextType>({})
+
 function App() {
-  const [drawerOpen, {set}] = useBoolean(false)
   const boxContainer = useRef<HTMLDivElement>(null)
   const [gridItems] = useState<PanelItem[]>([
     {
@@ -101,49 +108,38 @@ function App() {
     }
   ])
 
-  const screeSize = useSize(boxContainer)
-  const handleDrawerClose = () => set(false)
+  const screenSize = useSize(boxContainer)
+
 
   return (
-    <div style={{padding: 10}} ref={boxContainer}>
-      <Row justify={'end'}>
-        <Col>
-          <DefaultButton
-            text={'新增面板'}
-            icon={<PlusSquareOutlined/>}
-            onClick={() => set(true)}
-          />
-        </Col>
-      </Row>
-      <GridWrapper
-        gridLayoutProps={{
-          resizeHandle: null,
-          onResizeStop: (layout: Grid.GridLayout[], oldItem: Grid.GridLayout, newItem: Grid.GridLayout) => {
-            console.log(layout, oldItem, newItem)
-          },
-          onDragStop: (layout: Grid.GridLayout[], oldItem: Grid.GridLayout, newItem: Grid.GridLayout) => {
-            console.log(layout, oldItem, newItem)
-          }
-        }}
-        gridItems={gridItems}
-      />
-      <Drawer
-        placement={'right'}
-        open={drawerOpen}
-        onClose={handleDrawerClose}
-        title={'编辑面板'}
-        width={2 * ((screeSize?.width || 1200) / 3)}
-      >
-        <Row style={{height:'100%'}} gutter={[8,0]}>
-          <Col span={16}>
-            <div style={{height:'100%',background:'#333'}}>面板1</div>
-          </Col>
-          <Col span={8}>
-            <div style={{height:'100%',background:'#666'}}>面板2</div>
+    <GridProviderContext.Provider value={{
+      screenSize
+    }}>
+      <div style={{padding: 10}} ref={boxContainer}>
+        <Row justify={'end'}>
+          <Col>
+            <DefaultButton
+              text={'新增面板'}
+              icon={<PlusSquareOutlined/>}
+              onClick={() => {
+              }}
+            />
           </Col>
         </Row>
-      </Drawer>
-    </div>
+        <GridWrapper
+          gridLayoutProps={{
+            resizeHandle: null,
+            onResizeStop: (layout: Grid.GridLayout[], oldItem: Grid.GridLayout, newItem: Grid.GridLayout) => {
+              console.log(layout, oldItem, newItem)
+            },
+            onDragStop: (layout: Grid.GridLayout[], oldItem: Grid.GridLayout, newItem: Grid.GridLayout) => {
+              console.log(layout, oldItem, newItem)
+            }
+          }}
+          gridItems={gridItems}
+        />
+      </div>
+    </GridProviderContext.Provider>
   );
 }
 
