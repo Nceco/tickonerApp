@@ -5,6 +5,7 @@ import DefaultButton from "@/components/common/Button/DefaultButton";
 import {Col, Row} from "antd";
 import {PlusSquareOutlined} from "@ant-design/icons";
 import {useSize} from "ahooks";
+import PanelEditor, { PanelEditorRef } from "./components/GridLayout/PanelEditor";
 
 export interface PanelItem extends Grid.PanelProps {
   echartOptions?: EChartOption
@@ -21,6 +22,7 @@ export const GridProviderContext = createContext<GridContextType>({})
 
 function App() {
   const boxContainer = useRef<HTMLDivElement>(null)
+  const panelEditorRef = useRef<PanelEditorRef>(null)
   const [gridItems] = useState<PanelItem[]>([
     {
       layouts: {i: 'layout1', x: 0, y: 0, w: 6, h: 8},
@@ -127,6 +129,13 @@ function App() {
           </Col>
         </Row>
         <GridWrapper
+          onPanelEdit={(data) => {
+            console.log(data)
+            panelEditorRef.current?.showPanelEditor(data)
+          }}
+          onPanelDelete={(data) => {
+            console.log(data)
+          }}
           gridLayoutProps={{
             resizeHandle: null,
             onResizeStop: (layout: Grid.GridLayout[], oldItem: Grid.GridLayout, newItem: Grid.GridLayout) => {
@@ -139,6 +148,7 @@ function App() {
           gridItems={gridItems}
         />
       </div>
+      <PanelEditor ref={panelEditorRef}/>
     </GridProviderContext.Provider>
   );
 }
