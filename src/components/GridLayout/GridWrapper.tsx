@@ -16,7 +16,7 @@ const GridWrapper: React.FC<PropsWithChildren<Grid.GridWrapperProps>> = (props) 
 
   const gridContainerRef = useRef<HTMLDivElement>(null)
 
-  //调整试图大小grid的width也随着调整
+  //调整视图大小grid的width也随着调整
   const size = useSize(gridContainerRef)
 
   return (
@@ -33,9 +33,16 @@ const GridWrapper: React.FC<PropsWithChildren<Grid.GridWrapperProps>> = (props) 
         {
           gridItems?.length && gridItems?.map((item: PanelItem) => {
             return (
-              //todo 封装一个自定义面板容器
               <div key={item?.layouts?.i}>
-                <GridItem item={item}/>
+                <GridItem
+                  item={item}
+                  onItemEdit={() => {
+                    props?.onPanelEdit?.(item)
+                  }}
+                  onItemDelete={() => {
+                    props?.onPanelDelete?.(item)
+                  }}
+                />
               </div>
             )
           })

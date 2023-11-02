@@ -1,7 +1,9 @@
 declare namespace Grid {
   interface GridWrapperProps {
     gridLayoutProps: ReactGridLayout.ReactGridLayoutProps,
-    gridItems: PanelProps[]
+    gridItems: PanelProps[],
+    onPanelEdit: (panelItemData: any) => void,
+    onPanelDelete: (panelItemData: any) => void
   }
 
   interface PanelProps {

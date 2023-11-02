@@ -3,25 +3,23 @@
  * @author tangcong
  * @date 2023/10/28
  */
-import {Card, Col, Drawer, Dropdown, Empty, MenuProps, Row} from 'antd'
-import React, {PropsWithChildren, useContext, useRef} from "react";
+import { Card, Col, Drawer, Dropdown, Empty, MenuProps, Row } from 'antd'
+import React, { PropsWithChildren, useContext, useRef } from "react";
 import EchartsCard from "../Echarts/EchartsCard";
-import {GridProviderContext, PanelItem} from "../../App";
-import {DeleteOutlined, DownOutlined, EditOutlined, RedoOutlined} from "@ant-design/icons";
-import {useBoolean, useKeyPress} from "ahooks";
+import { GridProviderContext, PanelItem } from "../../App";
+import { DeleteOutlined, DownOutlined, EditOutlined, RedoOutlined } from "@ant-design/icons";
+import { useBoolean, useEventListener, useHover, useKeyPress } from "ahooks";
 
 type GridItemProps = {
-  item: PanelItem
+  item: PanelItem,
+  onItemEdit: () => void,
+  onItemDelete: () => void
 }
 type GridItemRef = {}
 
 const GridItem = React.forwardRef<GridItemRef, PropsWithChildren<GridItemProps>>((props, ref) => {
-  const {item: grid} = props
-  const [drawerOpen, {set}] = useBoolean(false)
-  const {screenSize} = useContext(GridProviderContext)
+  const { item: grid, onItemEdit, onItemDelete } = props
   const cardRef = useRef<HTMLDivElement>(null)
-
-
   const items: MenuProps['items'] = [
     {
       key: 'edit',
@@ -43,45 +41,49 @@ const GridItem = React.forwardRef<GridItemRef, PropsWithChildren<GridItemProps>>
     },
   ]
 
-  // useKeyPress(
-  //   69,
-  //   (event: any) => {
-  //     console.log(event.target)
-  //     set(true)
-  //   },
-  //   {
-  //     target: cardRef.current
-  //   },
-  // );
+  const hoverTarget = useHover(cardRef)
+
+  useEventListener('keydown',(e) => {
+    if(hoverTarget){
+      switch (e.key) {
+        case 'e':
+          break;
+        case 'd':
+          break;
+        case 'r':
+          break;
+      }
+    }
+  })
 
 
   const handleAction = (key: string) => {
     switch (key) {
       case 'edit':
-        set(true)
+        onItemEdit && onItemEdit()
         break;
       case 'refresh':
         console.log(key)
         break;
       default:
+        onItemDelete && onItemDelete()
         console.log(key)
     }
   }
-
-  const handleDrawerClose = () => set(false)
 
   return (
     <>
       {
         grid?.cardProps?.show ? (
           <Card
-            style={{height: '100%', overflow: 'hidden'}}
+            className={'hof'}
             title={grid?.cardProps?.title}
             extra={
               <Dropdown
-                menu={{items}}
+                menu={{ items }}
+                trigger={['hover']}
               >
-                <DownOutlined/>
+                <DownOutlined className={'selfHover'}/>
               </Dropdown>
             }
             ref={cardRef}
@@ -90,22 +92,6 @@ const GridItem = React.forwardRef<GridItemRef, PropsWithChildren<GridItemProps>>
           </Card>
         ) : <Empty description={'暂无数据'}/>
       }
-      <Drawer
-        placement={'right'}
-        open={drawerOpen}
-        onClose={handleDrawerClose}
-        title={'编辑面板'}
-        width={2 * ((screenSize?.width || 1200) / 3)}
-      >
-        <Row style={{height: '100%'}} gutter={[8, 0]}>
-          <Col span={16}>
-            <div style={{height: '100%', background: '#333'}}>面板1</div>
-          </Col>
-          <Col span={8}>
-            <div style={{height: '100%', background: '#666'}}>面板2</div>
-          </Col>
-        </Row>
-      </Drawer>
     </>
   )
 })
