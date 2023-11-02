@@ -5,9 +5,9 @@ import DefaultButton from "@/components/common/Button/DefaultButton";
 import {Col, Row} from "antd";
 import {PlusSquareOutlined} from "@ant-design/icons";
 import {useSize} from "ahooks";
-import PanelEditor, { PanelEditorRef } from "./components/GridLayout/PanelEditor";
+import PanelEditor, {PanelEditorRef} from "./components/GridLayout/PanelEditor/PanelEditor";
 
-export interface PanelItem extends Grid.PanelProps {
+export interface PanelItem<T> extends Grid.PanelProps<T> {
   echartOptions?: EChartOption
 }
 
@@ -23,9 +23,10 @@ export const GridProviderContext = createContext<GridContextType>({})
 function App() {
   const boxContainer = useRef<HTMLDivElement>(null)
   const panelEditorRef = useRef<PanelEditorRef>(null)
-  const [gridItems] = useState<PanelItem[]>([
+  const [gridItems, setGridItems] = useState<PanelItem<string | number>[]>([
     {
-      layouts: {i: 'layout1', x: 0, y: 0, w: 6, h: 8},
+      key: 'layout1',
+      layouts: {i: 'layout1', x: 0, y: 0, w: 6, h: 8, minH: 6, minW: 4, maxW: 12, maxH: 16},
       cardProps: {
         show: true,
         title: 'bar'
@@ -44,10 +45,12 @@ function App() {
             type: 'bar'
           }
         ]
-      }
+      },
+      valueType: 'bar'
     },
     {
-      layouts: {i: 'layout2', x: 6, y: 0, w: 6, h: 8},
+      key: 'layout2',
+      layouts: {i: 'layout2', x: 6, y: 0, w: 6, h: 8, minH: 6, minW: 4, maxW: 12, maxH: 16},
       cardProps: {
         show: true,
         title: 'line'
@@ -66,10 +69,12 @@ function App() {
             type: 'line'
           }
         ]
-      }
+      },
+      valueType: 'line'
     },
     {
-      layouts: {i: 'layout3', x: 0, y: 6, w: 6, h: 8},
+      key: 'layout3',
+      layouts: {i: 'layout3', x: 0, y: 6, w: 6, h: 8,minH: 6, minW: 4, maxW: 12, maxH: 16},
       cardProps: {
         show: true,
         title: 'pie'
@@ -103,10 +108,8 @@ function App() {
             }
           }
         ]
-      }
-    },
-    {
-      layouts: {i: 'layout4', x: 6, y: 6, w: 6, h: 8}
+      },
+      valueType: 'line'
     }
   ])
 
@@ -124,17 +127,30 @@ function App() {
               text={'新增面板'}
               icon={<PlusSquareOutlined/>}
               onClick={() => {
+                setGridItems(gridItems.concat({
+                  key: `layout${gridItems?.length + 1}`,
+                  layouts: {
+                    i: `layout${gridItems?.length + 1}`,
+                    x: 0,
+                    y: 0,
+                    w: 6,
+                    h: 8,
+                    minH: 6, minW: 4,
+                    maxW: 12,
+                    maxH: 16
+                  },
+                  valueType: ''
+                }))
               }}
             />
           </Col>
         </Row>
         <GridWrapper
           onPanelEdit={(data) => {
-            console.log(data)
             panelEditorRef.current?.showPanelEditor(data)
           }}
           onPanelDelete={(data) => {
-            console.log(data)
+            setGridItems(gridItems?.filter(item => item.key !== data.key))
           }}
           gridLayoutProps={{
             resizeHandle: null,

@@ -3,22 +3,22 @@
  * @author tangcong
  * @date 2023/10/28
  */
-import { Card, Col, Drawer, Dropdown, Empty, MenuProps, Row } from 'antd'
-import React, { PropsWithChildren, useContext, useRef } from "react";
+import {Card, Col, Drawer, Dropdown, Empty, MenuProps, Row} from 'antd'
+import React, {PropsWithChildren, useContext, useRef} from "react";
 import EchartsCard from "../Echarts/EchartsCard";
-import { GridProviderContext, PanelItem } from "../../App";
-import { DeleteOutlined, DownOutlined, EditOutlined, RedoOutlined } from "@ant-design/icons";
-import { useBoolean, useEventListener, useHover, useKeyPress } from "ahooks";
+import {GridProviderContext, PanelItem} from "../../App";
+import {DeleteOutlined, DownOutlined, EditOutlined, RedoOutlined} from "@ant-design/icons";
+import {useBoolean, useEventListener, useHover, useKeyPress} from "ahooks";
 
 type GridItemProps = {
-  item: PanelItem,
+  item: PanelItem<string | number>,
   onItemEdit: () => void,
   onItemDelete: () => void
 }
 type GridItemRef = {}
 
 const GridItem = React.forwardRef<GridItemRef, PropsWithChildren<GridItemProps>>((props, ref) => {
-  const { item: grid, onItemEdit, onItemDelete } = props
+  const {item: grid, onItemEdit, onItemDelete} = props
   const cardRef = useRef<HTMLDivElement>(null)
   const items: MenuProps['items'] = [
     {
@@ -43,17 +43,23 @@ const GridItem = React.forwardRef<GridItemRef, PropsWithChildren<GridItemProps>>
 
   const hoverTarget = useHover(cardRef)
 
-  useEventListener('keydown',(e) => {
-    if(hoverTarget){
+  //监听键盘的事件
+  useEventListener('keydown', (e) => {
+    if (hoverTarget) {
       switch (e.key) {
         case 'e':
+          onItemEdit && onItemEdit()
           break;
         case 'd':
+          onItemDelete && onItemDelete()
           break;
         case 'r':
+          console.log('refresh')
           break;
       }
     }
+  }, {
+    capture: true
   })
 
 
@@ -72,27 +78,23 @@ const GridItem = React.forwardRef<GridItemRef, PropsWithChildren<GridItemProps>>
   }
 
   return (
-    <>
-      {
-        grid?.cardProps?.show ? (
-          <Card
-            className={'hof'}
-            title={grid?.cardProps?.title}
-            extra={
-              <Dropdown
-                menu={{ items }}
-                trigger={['hover']}
-              >
-                <DownOutlined className={'selfHover'}/>
-              </Dropdown>
-            }
-            ref={cardRef}
-          >
-            <EchartsCard options={grid?.echartOptions || {}}/>
-          </Card>
-        ) : <Empty description={'暂无数据'}/>
+    <Card
+      className={'hof'}
+      title={grid?.cardProps?.title}
+      extra={
+        <Dropdown
+          menu={{items}}
+          trigger={['hover']}
+        >
+          <DownOutlined className={'selfHover'}/>
+        </Dropdown>
       }
-    </>
+      ref={cardRef}
+    >
+      {
+        grid?.echartOptions ? <EchartsCard options={grid?.echartOptions || {}}/> : <Empty description={'暂无数据'}/>
+      }
+    </Card>
   )
 })
 
