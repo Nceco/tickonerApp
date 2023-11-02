@@ -3,17 +3,19 @@
  * @author tangcong
  * @date 2023/10/29
  */
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import * as echarts from "echarts";
-import { EChartOption } from "echarts";
+import {EChartOption} from "echarts";
 
 interface EchartsCardProps {
-  options: EChartOption
+  options: EChartOption,
+  echartWidth?: number
 }
 
 const EchartsCard: React.FC<EchartsCardProps> = (props) => {
+  const {echartWidth,options} = props
   const echartRef = useRef<HTMLDivElement>(null)
-  const [echartOptions] = useState<EChartOption>(props?.options || {})
+  const [echartOptions] = useState<EChartOption>(options || {})
 
   useEffect(() => {
     const myChart = echarts.init(echartRef.current)
@@ -24,9 +26,13 @@ const EchartsCard: React.FC<EchartsCardProps> = (props) => {
   return (
     <div
       ref={echartRef}
-      style={{
-        minHeight: 260
-      }}
+      style={
+        echartWidth !== undefined ? {
+          height: echartWidth
+        } : {
+          minHeight: 260
+        }
+      }
     />
   )
 }
