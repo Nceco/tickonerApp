@@ -7,7 +7,7 @@ declare namespace Grid {
   }
 
   interface PanelProps<T> {
-    layouts: ReactGridLayout.Layout,
+    layouts: Omit<ReactGridLayout.Layout, 'i'>,
     cardProps?: {
       show: boolean,
       title?: string,

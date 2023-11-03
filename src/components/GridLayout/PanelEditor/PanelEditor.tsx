@@ -7,7 +7,7 @@ import SubmitButton from "@/components/common/Button/SubmitButton";
 
 type PanelEditorProps = {}
 export type PanelEditorRef = {
-  showPanelEditor: (panelItemData: PanelItem<string | number>) => void
+  showPanelEditor: (panelItemData: PanelItem<string>) => void
 }
 
 const chartOptions = [
@@ -31,13 +31,13 @@ const chartOptions = [
 
 const PanelEditor = React.forwardRef<PanelEditorRef, PanelEditorProps>((props, ref) => {
   const [drawerOpen, {set}] = useBoolean(false)
-  const [currentData, setCurrentData] = useState<PanelItem<string | number>>()
+  const [currentData, setCurrentData] = useState<PanelItem<string>>()
   const [formRef] = Form.useForm()
   const {screenSize} = useContext(GridProviderContext)
 
   useImperativeHandle(ref, () => {
     return {
-      showPanelEditor: (data: PanelItem<string | number>) => {
+      showPanelEditor: (data: PanelItem<string>) => {
         setCurrentData(data)
         set(true)
       }

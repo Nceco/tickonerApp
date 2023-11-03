@@ -11,7 +11,7 @@ import { PanelItem } from "../../App";
 
 // https://github.com/react-grid-layout/react-grid-layout
 
-const  GridWrapper: React.FC<PropsWithChildren<Grid.GridWrapperProps>> = (props) => {
+const GridWrapper: React.FC<PropsWithChildren<Grid.GridWrapperProps>> = (props) => {
   const { gridItems } = props
 
   const gridContainerRef = useRef<HTMLDivElement>(null)
@@ -28,12 +28,17 @@ const  GridWrapper: React.FC<PropsWithChildren<Grid.GridWrapperProps>> = (props)
         width={size?.width || 1200}
         //cols代表整个Grid一行所能填充的几个layout中的w [layout.w * n] = 12
         cols={12}
-        layout={gridItems?.map((item: PanelItem<string | number>) => item?.layouts)}
+        layout={gridItems?.map((item: PanelItem<string>) => {
+          return {
+            ...item?.layouts,
+            i: item?.key
+          }
+        })}
       >
         {
-          gridItems?.length > 0 && gridItems?.map((item: PanelItem<string | number>) => {
+          gridItems?.length > 0 && gridItems?.map((item: PanelItem<string>) => {
             return (
-              <div key={item?.layouts?.i}>
+              <div key={item?.key}>
                 <GridItem
                   item={item}
                   onItemEdit={() => {

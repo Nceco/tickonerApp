@@ -1,11 +1,14 @@
-import React, {createContext, useEffect, useRef, useState} from 'react';
+import React, { createContext, useEffect, useRef, useState } from 'react';
 import GridWrapper from '@/components/GridLayout/GridWrapper'
-import {EChartOption} from "echarts";
+import { EChartOption } from "echarts";
 import DefaultButton from "@/components/common/Button/DefaultButton";
-import {Col, Row} from "antd";
-import {PlusSquareOutlined} from "@ant-design/icons";
-import {useSize} from "ahooks";
-import PanelEditor, {PanelEditorRef} from "./components/GridLayout/PanelEditor/PanelEditor";
+import { Col, Row } from "antd";
+import { PlusSquareOutlined } from "@ant-design/icons";
+import { useDynamicList, useSize } from "ahooks";
+import PanelEditor, { PanelEditorRef } from "./components/GridLayout/PanelEditor/PanelEditor";
+import { DEFAULT_LIMIT_PARAMS } from "./components/GridLayout/Constant";
+import { UUID6 } from "./utils/Utils";
+import { findIndex } from 'lodash'
 
 export interface PanelItem<T> extends Grid.PanelProps<T> {
   echartOptions?: EChartOption
@@ -20,13 +23,13 @@ type GridContextType = {
 
 export const GridProviderContext = createContext<GridContextType>({})
 
-function App() {
+function App (){
   const boxContainer = useRef<HTMLDivElement>(null)
   const panelEditorRef = useRef<PanelEditorRef>(null)
-  const [gridItems, setGridItems] = useState<PanelItem<string | number>[]>([
+  const { list: gridItems, push, resetList, remove, replace } = useDynamicList<PanelItem<string>>([
     {
-      key: 'layout1',
-      layouts: {i: 'layout1', x: 0, y: 0, w: 6, h: 8, minH: 6, minW: 4, maxW: 12, maxH: 16},
+      key: UUID6(),
+      layouts: { x: 0, y: 0, w: 6, h: 8, ...DEFAULT_LIMIT_PARAMS },
       cardProps: {
         show: true,
         title: 'bar'
@@ -49,8 +52,8 @@ function App() {
       valueType: 'bar'
     },
     {
-      key: 'layout2',
-      layouts: {i: 'layout2', x: 6, y: 0, w: 6, h: 8, minH: 6, minW: 4, maxW: 12, maxH: 16},
+      key: UUID6(),
+      layouts: { x: 6, y: 0, w: 6, h: 8, ...DEFAULT_LIMIT_PARAMS },
       cardProps: {
         show: true,
         title: 'line'
@@ -73,8 +76,8 @@ function App() {
       valueType: 'line'
     },
     {
-      key: 'layout3',
-      layouts: {i: 'layout3', x: 0, y: 6, w: 6, h: 8,minH: 6, minW: 4, maxW: 12, maxH: 16},
+      key: UUID6(),
+      layouts: { x: 0, y: 6, w: 6, h: 8, ...DEFAULT_LIMIT_PARAMS },
       cardProps: {
         show: true,
         title: 'pie'
@@ -93,11 +96,11 @@ function App() {
             type: 'pie',
             radius: '50%',
             data: [
-              {value: 1048, name: 'AD'},
-              {value: 735, name: '上单'},
-              {value: 580, name: '辅助'},
-              {value: 484, name: '中单'},
-              {value: 300, name: '打野'}
+              { value: 1048, name: 'AD' },
+              { value: 735, name: '上单' },
+              { value: 580, name: '辅助' },
+              { value: 484, name: '中单' },
+              { value: 300, name: '打野' }
             ],
             emphasis: {
               itemStyle: {
@@ -120,27 +123,24 @@ function App() {
     <GridProviderContext.Provider value={{
       screenSize
     }}>
-      <div style={{padding: 10}} ref={boxContainer}>
+      <div style={{ padding: 10 }} ref={boxContainer}>
         <Row justify={'end'}>
           <Col>
             <DefaultButton
               text={'新增面板'}
               icon={<PlusSquareOutlined/>}
               onClick={() => {
-                setGridItems(gridItems.concat({
-                  key: `layout${gridItems?.length + 1}`,
+                push({
+                  key: UUID6(),
                   layouts: {
-                    i: `layout${gridItems?.length + 1}`,
                     x: 0,
                     y: 0,
                     w: 6,
                     h: 8,
-                    minH: 6, minW: 4,
-                    maxW: 12,
-                    maxH: 16
+                    ...DEFAULT_LIMIT_PARAMS
                   },
                   valueType: ''
-                }))
+                })
               }}
             />
           </Col>
@@ -150,7 +150,10 @@ function App() {
             panelEditorRef.current?.showPanelEditor(data)
           }}
           onPanelDelete={(data) => {
-            setGridItems(gridItems?.filter(item => item.key !== data.key))
+            if (data?.key) {
+              const index = findIndex(gridItems, ['key', data.key])
+              remove(index)
+            }
           }}
           gridLayoutProps={{
             resizeHandle: null,
