@@ -1,7 +1,7 @@
 import React, {useContext, useImperativeHandle, useRef, useState} from "react";
 import {Card, Col, Drawer, Form, Input, Row, Select} from "antd";
 import {useBoolean} from "ahooks";
-import {GridProviderContext, PanelItem} from "../../../App";
+import {GridProviderContext, PanelItem} from "@/GridLayoutHome";
 import EchartsCard from "@/components/Echarts/EchartsCard";
 import SubmitButton from "@/components/common/Button/SubmitButton";
 import PanelFormEditor, {FunctionParams} from "@/components/GridLayout/PanelEditor/PanelFormEditor";
