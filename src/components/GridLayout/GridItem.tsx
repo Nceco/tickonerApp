@@ -92,7 +92,7 @@ const GridItem = React.forwardRef<GridItemRef, PropsWithChildren<GridItemProps>>
       ref={cardRef}
     >
       {
-        grid?.echartOptions ? <EchartsCard options={grid?.echartOptions || {}}/> : <Empty description={'暂无数据'}/>
+        grid?.echartOptions ? <EchartsCard options={grid?.echartOptions}/> : <Empty description={'暂无数据'}/>
       }
     </Card>
   )

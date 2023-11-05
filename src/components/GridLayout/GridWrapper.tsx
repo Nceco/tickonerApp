@@ -3,16 +3,16 @@
  * @author tangcong
  * @date 2023/10/28
  */
-import React, { PropsWithChildren, useRef } from "react";
+import React, {PropsWithChildren, useRef} from "react";
 import GridLayout from 'react-grid-layout'
-import { useSize } from "ahooks";
+import {useSize} from "ahooks";
 import GridItem from "./GridItem";
-import { PanelItem } from "../../App";
+import {PanelItem} from "../../App";
 
 // https://github.com/react-grid-layout/react-grid-layout
 
 const GridWrapper: React.FC<PropsWithChildren<Grid.GridWrapperProps>> = (props) => {
-  const { gridItems } = props
+  const {gridItems} = props
 
   const gridContainerRef = useRef<HTMLDivElement>(null)
 
@@ -36,13 +36,13 @@ const GridWrapper: React.FC<PropsWithChildren<Grid.GridWrapperProps>> = (props) 
         })}
       >
         {
-          gridItems?.length > 0 && gridItems?.map((item: PanelItem<string>) => {
+          gridItems?.length > 0 && gridItems?.map((item: PanelItem<string>, index) => {
             return (
               <div key={item?.key}>
                 <GridItem
                   item={item}
                   onItemEdit={() => {
-                    props?.onPanelEdit?.(item)
+                    props?.onPanelEdit?.(item, index)
                   }}
                   onItemDelete={() => {
                     props?.onPanelDelete?.(item)
