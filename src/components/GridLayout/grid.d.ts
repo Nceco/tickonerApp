@@ -2,18 +2,24 @@ declare namespace Grid {
   interface GridWrapperProps {
     gridLayoutProps: ReactGridLayout.ReactGridLayoutProps,
     gridItems: PanelProps[],
-    onPanelEdit: (panelItemData: PanelProps) => void,
+    onPanelEdit: (panelItemData: PanelProps, index: number) => void,
     onPanelDelete: (panelItemData: PanelProps) => void
   }
 
   interface PanelProps<T> {
-    layouts: ReactGridLayout.Layout,
+    layouts: Omit<ReactGridLayout.Layout, 'i'>,
     cardProps?: {
-      show: boolean,
-      title?: string,
-      chartTitle?: string
+      title?: string
     },
-    valueType: string,
+    chartProps?: {
+      request?: {
+        type: string,
+        url: string,
+        params: string
+      }
+    },
+    transformFunc?: string,
+    valueType?: string,
     key: T
 
     //todo

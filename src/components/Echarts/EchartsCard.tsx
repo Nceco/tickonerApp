@@ -13,14 +13,13 @@ interface EchartsCardProps {
 }
 
 const EchartsCard: React.FC<EchartsCardProps> = (props) => {
-  const {echartWidth,options} = props
+  const {echartWidth} = props
   const echartRef = useRef<HTMLDivElement>(null)
-  const [echartOptions] = useState<EChartOption>(options || {})
 
   useEffect(() => {
     const myChart = echarts.init(echartRef.current)
-    myChart && myChart.setOption(echartOptions)
-  }, [])
+    myChart && myChart.setOption(props?.options)
+  }, [props?.options])
 
 
   return (
