@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
     entry: './src/index.tsx',
     output: {
+      //todo 理解一下publicPath
+        publicPath:'/',
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist'),
         clean: true

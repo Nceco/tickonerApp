@@ -1,8 +1,9 @@
 import React from "react";
-import GridChartLayout from "@/pages/Chart/GridChartLayout";
-import Asset from "@/pages/Asset/Asset";
 import MainLayout from "@/Layout/MainLayout";
 import Login from "../pages/Login/Login";
+import GridChartLayout from "@/pages/Chart/GridChartLayout";
+import Asset from "@/pages/Asset/Asset";
+import AssetDetail from "@/pages/Asset/AssetDetail";
 
 export interface RouteItemType {
   isDefaultPage?: boolean,
@@ -34,13 +35,21 @@ const routes: RouteItemType[] = [
         component: Asset
       },
       {
+        key: 'detail',
+        name: '组件分析详情',
+        // icon: <FundOutlined />,
+        label: '组件分析详情',
+        path: '/detail',
+        component: AssetDetail
+      },
+      {
         key: 'chart',
         name: '图表编辑',
         // icon: '',
         label: '图表编辑',
         path: '/chart',
         component: GridChartLayout
-      }
+      },
     ]
   },
   {
