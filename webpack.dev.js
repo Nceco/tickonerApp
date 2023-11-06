@@ -28,6 +28,7 @@ module.exports = {
         compress: true,
         port: 2333,
         open: true,
+        historyApiFallback: true, //使用BrowserRouter(history模式的路由时需要将浏览器的请求重定向到index.html中)
         proxy: {
             '/api': {
                 target: 'http://101.132.46.74',
