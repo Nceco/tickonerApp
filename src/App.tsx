@@ -1,43 +1,33 @@
 import React from "react";
-import {Layout, Menu} from "antd";
-import {UploadOutlined, UserOutlined, VideoCameraOutlined} from "@ant-design/icons";
+import { Route, Routes } from "react-router-dom";
 
-const {Header, Sider, Content} = Layout;
+import routes, { RouteItemType } from "./route/routes";
+
 const App: React.FC = () => {
+
+  function transformRoute (routes: RouteItemType[]){
+    return (
+      <>
+        {
+          routes.map((route) => {
+            if (route?.children && route?.children.length > 0) {
+              return (
+                <Route key={route?.key} path={route?.path} Component={route?.component}>
+                  {transformRoute(route.children)}
+                </Route>
+              )
+            }
+            return <Route key={route?.key} path={route?.path} Component={route?.component}/>
+          })
+        }
+      </>
+    )
+  }
+
   return (
-    <Layout style={{minHeight: '100vh'}}>
-      <Sider trigger={null}>
-        <div style={{height: 64, background: '#4dd0e1'}}>logo</div>
-        <Menu
-          style={{height:'calc(100vh - 64px)'}}
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: '1',
-              icon: <VideoCameraOutlined/>,
-              label: 'nav 2',
-            },
-            {
-              key: '2',
-              icon: <UploadOutlined/>,
-              label: 'nav 3',
-            },
-            {
-              key: '3',
-              icon: <UserOutlined/>,
-              label: '图表编辑',
-            },
-          ]}
-        />
-      </Sider>
-      <Layout>
-        <Header style={{background: '#FFFFFF'}}>header</Header>
-        <Content style={{margin: 20,background:'#FFFFFF',borderRadius:2,padding:10}}>
-          content
-        </Content>
-      </Layout>
-    </Layout>
+    <Routes>
+      {transformRoute(routes)}
+    </Routes>
   )
 }
 
