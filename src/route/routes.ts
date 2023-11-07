@@ -4,6 +4,7 @@ import Login from "../pages/Login/Login";
 import GridChartLayout from "@/pages/Chart/GridChartLayout";
 import Asset from "@/pages/Asset/Asset";
 import AssetDetail from "@/pages/Asset/AssetDetail";
+import Main from "../pages/Main/Main";
 
 export interface RouteItemType {
   isDefaultPage?: boolean,
@@ -26,12 +27,19 @@ const routes: RouteItemType[] = [
     hideInMenu: true,
     children: [
       {
+        key:'main',
+        name:'主页',
+        label:'主页',
+        path:'/',
+        component:Main
+      },
+      {
         isDefaultPage: true,
         key: 'analysis',
         name: '组件分析',
         // icon: <FundOutlined />,
         label: '组件分析',
-        path: '/',
+        path: '/analysis',
         component: Asset
       },
       {
@@ -39,7 +47,7 @@ const routes: RouteItemType[] = [
         name: '组件分析详情',
         // icon: <FundOutlined />,
         label: '组件分析详情',
-        path: '/detail',
+        path: '/analysis/detail',
         component: AssetDetail
       },
       {
