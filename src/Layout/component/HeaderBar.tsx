@@ -8,7 +8,7 @@ import { Button, Col, Row } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import UserAvatar from "./UserAvatar";
 
-type HeaderBarProps = {
+export type HeaderBarProps = {
   collapsed: boolean,
   handleCollapsed: () => void;
 }

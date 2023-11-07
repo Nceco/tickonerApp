@@ -19,7 +19,7 @@ const MainLayout: React.FC = () => {
   return (
     <Layout>
       <Sider trigger={null} className={'sliderBox'} collapsible collapsed={collapsed}>
-        <Logo/>
+        <Logo collapsed={collapsed}/>
         <MenuBar/>
       </Sider>
       <Layout>
