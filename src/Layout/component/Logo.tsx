@@ -6,9 +6,11 @@
 import React from "react";
 
 //todo
-const Logo:React.FC = () => {
+const Logo: React.FC = (props) => {
   return (
-    <div style={{ height: 64, background: '#4dd0e1' }}>logo</div>
+    <div style={{ height: 64 }}>
+      <img src={'/static/imgs/logo_2023091702.jpg'} style={{ height: '100%', width: '100%' }}/>
+    </div>
   )
 }
 
