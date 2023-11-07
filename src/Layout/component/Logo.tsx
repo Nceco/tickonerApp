@@ -4,12 +4,14 @@
  * @date 2023/11/07
  */
 import React from "react";
+import './logo.less'
+import {HeaderBarProps} from "@/Layout/component/HeaderBar";
 
-//todo
-const Logo: React.FC = (props) => {
+const Logo: React.FC<Pick<HeaderBarProps, 'collapsed'>> = (props) => {
+  const {collapsed} = props
   return (
-    <div style={{ height: 64 }}>
-      <img src={'/static/imgs/logo_2023091702.jpg'} style={{ height: '100%', width: '100%' }}/>
+    <div className={'textBox'}>
+      <span className={'gradientText'} style={collapsed ? {fontSize: 14} : {fontSize: 24}}>7mu_12</span>
     </div>
   )
 }

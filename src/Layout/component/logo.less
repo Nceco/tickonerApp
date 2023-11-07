@@ -1,0 +1,36 @@
+.gradientText {
+  color: transparent;
+  background: -webkit-linear-gradient(30deg, #32c5ff 25%, #b620e0 50%, #f7b500 75%, #20e050 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: auto;
+  animation: gradientText 300s infinite linear;
+  -webkit-animation: gradientText 300s infinite linear;
+  flex: 1;
+}
+
+@keyframes gradientText {
+  0% {
+    background-position: 0;
+  }
+  100% {
+    background-position: 28000px;
+  }
+}
+
+.textBox {
+  height: 64px !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  border-right-width: 1px;
+  border-right-color: #f9f9f9;
+  border-right-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #f9f9f9;
+  border-bottom-style: solid;
+  background: rgba(230,244,255,.2);
+}
