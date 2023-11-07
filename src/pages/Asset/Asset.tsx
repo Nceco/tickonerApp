@@ -11,7 +11,7 @@ const Asset:React.FC = () => {
         text={'详情'}
         type={'link'}
         onClick={() => {
-          navigate('/detail')
+          navigate('/analysis/detail')
         }}
       />
     </>

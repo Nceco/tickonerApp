@@ -5,40 +5,33 @@
  */
 
 import React, { useState } from "react";
-import { Layout, Menu } from "antd";
-import { BarChartOutlined, FundOutlined } from "@ant-design/icons";
+import { Layout } from "antd";
 import AuthWrapper from "../Auth/AuthWrapper";
-import { Link, Outlet } from "react-router-dom";
-import { MenuItemType } from "antd/lib/menu/hooks/useItems";
+import { Outlet } from "react-router-dom";
+import Logo from "./component/Logo";
+import MenuBar from "./component/MenuBar";
+import HeaderBar from "./component/HeaderBar";
 
 const { Header, Sider, Content } = Layout;
-const MainLayout: React.FC = (props) => {
-  const [menus,setMenus] = useState<MenuItemType[]>([
-    {
-      key: 'analysis',
-      icon: <FundOutlined />,
-      label: <Link to={'/'}>{'组件分析'}</Link>,
-    },
-    {
-      key: 'chart',
-      icon: <BarChartOutlined />,
-      label: <Link to={'/chart'}>{'图表编辑'}</Link>,
-    },
-  ])
+
+const MainLayout: React.FC = () => {
+  const [collapsed, setCollapsed] = useState<boolean>(false)
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider trigger={null}>
-        <div style={{ height: 64, background: '#4dd0e1' }}>logo</div>
-        <Menu
-          style={{ height: 'calc(100vh - 64px)' }}
-          mode="inline"
-          defaultSelectedKeys={['analysis']}
-          items={menus}
-        />
+    <Layout>
+      <Sider trigger={null} className={'sliderBox'} collapsible collapsed={collapsed}>
+        <Logo/>
+        <MenuBar/>
       </Sider>
       <Layout>
-        <Header style={{ background: '#FFFFFF' }}>header</Header>
-        <Content style={{ padding: 10 }}>
+        <Header className={'headerBox'}>
+          <HeaderBar
+            handleCollapsed={() => {
+              setCollapsed( !collapsed)
+            }}
+            collapsed={collapsed}
+          />
+        </Header>
+        <Content style={{ padding: 20 }}>
           {/*子路由的占位符*/}
           <Outlet/>
         </Content>
