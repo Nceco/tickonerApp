@@ -34,6 +34,12 @@ module.exports = {
                 target: 'http://101.132.46.74',
                 changeOrigin: true,
                 pathRewrite: {'^/api': ''}
+            },
+            //服务器静态资源
+            '/static':{
+                target: 'http://101.132.46.74',
+                changeOrigin: true,
+                pathRewrite: {'^': ''}
             }
         }
     }
