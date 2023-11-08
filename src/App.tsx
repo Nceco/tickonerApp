@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 import routes, { RouteItemType } from "./route/routes";
 
@@ -16,6 +16,10 @@ const App: React.FC = () => {
                   {transformRoute(route.children)}
                 </Route>
               )
+            }
+            //主入口重定向到welcome页
+            if (route?.path === '/') {
+              return <Route key={route?.key} path={route?.path} Component={() => <Navigate to={'/welcome'}/>}/>
             }
             return <Route key={route?.key} path={route?.path} Component={route?.component}/>
           })

@@ -30,7 +30,20 @@ module.exports = {
             },
             {
                 test: /.(scss|sass)$/i,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass¬-loader']
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+            },
+            //图片资源配置（webpack5内置了）
+            {
+                test: /\.(png|jpe?g|gif|svg|webp)$/,
+                type: 'asset',
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 20 * 1024
+                    }
+                },
+                generator:{
+                    filename:'images/[hash:10][ext][query]'
+                }
             }
         ]
     },
