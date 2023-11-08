@@ -4,7 +4,6 @@
  * @date 2023/11/07
  */
 import React from "react";
-import './logo.less'
 import {HeaderBarProps} from "@/Layout/component/HeaderBar";
 
 const Logo: React.FC<Pick<HeaderBarProps, 'collapsed'>> = (props) => {

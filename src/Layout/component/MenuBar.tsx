@@ -15,12 +15,12 @@ const MenuBar: React.FC = () => {
     {
       key: 'analysis',
       icon: <FundOutlined/>,
-      label: <Link to={'/analysis'}>{'组件分析'}</Link>,
+      label: <Link to={'/main/analysis'}>{'组件分析'}</Link>,
     },
     {
       key: 'chart',
       icon: <BarChartOutlined/>,
-      label: <Link to={'/chart'}>{'图表编辑'}</Link>,
+      label: <Link to={'/main/chart'}>{'图表编辑'}</Link>,
     },
   ])
   return (

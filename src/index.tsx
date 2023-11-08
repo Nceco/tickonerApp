@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App';
 import './mock/mock'
 import './global.less';
+import './Layout/component/logo.less'
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
