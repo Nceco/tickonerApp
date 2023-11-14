@@ -1,0 +1,58 @@
+@commonMargin: 10px;
+@commonPadding: 10px;
+@globalBgColor: #f9f9f9;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  background: @globalBgColor;
+}
+.ant-menu .ant-menu-item{
+  border-radius: 4px !important;
+}
+
+.selfHover:hover {
+  cursor: pointer;
+}
+
+.heightFull {
+  height: 100%;
+}
+
+.overFlowHidden {
+  overflow: hidden;
+}
+
+.borderRadiusZero {
+  border-radius: 0;
+}
+
+.hof {
+  .heightFull;
+  .overFlowHidden;
+  .borderRadiusZero;
+}
+
+.layoutFixCommon{
+  background: #FFFFFF !important;
+  position: sticky !important;
+  top: 0px;
+}
+
+.sliderBox {
+  .layoutFixCommon;
+  height: calc(100vh);
+}
+.headerBox{
+  .layoutFixCommon;
+  z-index: 99;
+  padding:0 20px;
+}
+.welcomeBg{
+  background: url("./imgs/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity:.5;
+}
