@@ -4,6 +4,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import routes, { RouteItemType } from "./route/routes";
 
 const App: React.FC = () => {
+  console.log('dsafa')
 
   function transformRoute (routes: RouteItemType[]){
     return (
